@@ -1,0 +1,69 @@
+version: "3.1"
+
+stories:
+
+- story: happy path
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_great
+  - action: utter_happy
+
+- story: sad path 1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: affirm
+  - action: utter_happy
+
+- story: sad path 2
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: deny
+  - action: utter_goodbye
+
+- story: list matches
+  steps:
+  - intent: list_matches
+  - action: action_list_matches
+
+- story: register player
+  steps:
+  - intent: request_match_register
+  - action: utter_confirm_registration_possible
+  - action: register_form
+  - action: utter_submit
+  - action: utter_slots_values
+- story: interactive_story_1
+  steps:
+  - intent: request_match_register
+  - action: utter_confirm_registration_possible
+  - action: register_form
+  - active_loop: register_form
+  - slot_was_set:
+    - requested_slot: match_name
+  - intent: request_match_register
+  - intent: inform
+    entities:
+    - match_name: qazxswedcvfr
+  - action: action_extract_slots
+  - slot_was_set:
+    - match_name: qazxswedcvfr
+  - action: utter_ask_player_name
+  - intent: inform
+  - intent: inform
+    entities:
+    - player_name: zaqwsxcde
+  - action: utter_slots_values
+  - action: action_extract_slots
+  - slot_was_set:
+    - player_name: zaqwsxcde
+  - action: action_register_player
+  - action: action_default_fallback
