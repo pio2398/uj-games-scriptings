@@ -62,7 +62,6 @@ local tetriminos = {
     },
 }
 
--- Save the current game state to a file
 function saveGame()
     local gameData = {
         grid = grid,
@@ -76,7 +75,6 @@ function saveGame()
     love.filesystem.write(SAVE_GAME_FILENAME, serpent.dump(gameData))
 end
 
--- Load the game state from a file
 function loadGame()
     if love.filesystem.getInfo(SAVE_GAME_FILENAME) then
         local gameData = love.filesystem.load(SAVE_GAME_FILENAME)()
@@ -100,7 +98,7 @@ function copy2DArray(originalArray)
         copiedArray[i] = {}
         for j = 1, #originalArray[i] do
             if type(originalArray[i][j]) == "table" then
-                copiedArray[i][j] = copy2DArray(originalArray[i][j])  -- Recursive call for nested tables
+                copiedArray[i][j] = copy2DArray(originalArray[i][j]) 
             else
                 copiedArray[i][j] = originalArray[i][j]
             end
@@ -144,6 +142,7 @@ end
 function love.load()
     love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT, { vsync = vsyncEnabled })
     love.window.setTitle("Tetris")
+    -- https://gamesounds.xyz/?dir=Kenney%27s%20Sound%20Pack/RPG%20Sounds/OGG
     sound = love.audio.newSource("block.ogg", "static")
 
     if loadGame() == false then
